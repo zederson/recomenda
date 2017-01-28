@@ -2,21 +2,21 @@ package br.com.ze;
 
 import java.io.IOException;
 
-import org.apache.mahout.cf.taste.eval.RecommenderBuilder;
 import org.apache.mahout.cf.taste.eval.RecommenderEvaluator;
 import org.apache.mahout.cf.taste.impl.eval.AverageAbsoluteDifferenceRecommenderEvaluator;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
+import org.apache.mahout.common.RandomUtils;
 
-public class Evaluator {
+public class MyEvaluator {
 	
 	public static void main(String[] args) throws IOException, Exception {
+		RandomUtils.useTestSeed();
+
+		FileDataModel model = new DataModelBuilder().getCoursesModel();
+
 		RecommenderEvaluator evaluator = new AverageAbsoluteDifferenceRecommenderEvaluator();
-		
-		FileDataModel model = new ProductRecomender().getDataModel();
-		RecommenderBuilder builder = new ProductEvaluator();
-		double error = evaluator.evaluate(builder, null, model, 0.9, 1.0);
+		double error = evaluator.evaluate(new MyRecommenderBuilder(), null, model, 0.9, 1.0);
 		
 		System.out.println(error);
 	}
-
 }
